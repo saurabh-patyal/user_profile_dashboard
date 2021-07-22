@@ -1,0 +1,50 @@
+{% extends 'accounts/accounts-base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-secondary" style=" background-image: url('/static/img/signup.svg'); background-position:center;background-size:contain;background-repeat:no-repeat;"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                                <form action="{% url 'signup' %}" method="POST" novalidate>
+                                    {% csrf_token %}
+                                    {% comment %} {% if form.non_field_errors %}                 
+                                        {% for error in form.non_field_errors %}
+                                        {{error}}
+                                        {% endfor %}
+                                    {% endif %} {% endcomment %}
+                                    {{form|crispy}}
+                                    {% comment %} <div class="showError">{{error.errors | striptags}}</div> {% endcomment %}
+                                    {% comment %} {% for field in form %}                      
+                                        <div class="form-group">
+                                        {{field.label_tag|crispy}}
+                                        <div>{{field|crispy}}</div> 
+                                        <div class="showError">{{error.errors | striptags}}</div>
+                                        </div>
+                                    {% endfor %} {% endcomment %}
+                                    
+                                    <input type="submit" value="Register" class="btn btn-primary btn-block">
+                                </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="{% url 'password_reset' %}">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="{%url 'login' %}">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

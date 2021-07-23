@@ -51,14 +51,7 @@ def signup(request):
     }
     return render(request,'accounts/register.html',context)
 
-#############user dashboard######################
-@login_required(login_url='login')   
-def dashboard(request):
-    context={
 
-    }
-
-    return render(request,'accounts/dashboard.html',context)
 
 ##############Logout user & Redirected to home page#################
 @login_required(login_url='login')   

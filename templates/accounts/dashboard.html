@@ -1,4 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'includes/alerts.html' %}
+
+ {% comment %} ===============Table=========== {% endcomment %}
+
+          
+          <div class="row mx-auto">
+            <div class="col-lg-10 offset-lg-1"> 
+              <div class="card mx-auto rounded">
+                <div class="card-body">
+                  <h2 class="text-center">Items In Store</h2>
+                  <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                          <thead class="bg-dark text-white">
+                            <tr class="bg-primary rounded">
+                              <th>S.No</th>
+                              <th>Procuct Name</th>
+                              <th>Product Category</th>
+                              <th>Quatity Remained</th>
+                              <th>Last Updated</th>
+                              <th>Update Entry</th>
+                              <th>Delete Entry</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% if products %}
+                              {%for product in products %}
+                                <tr>
+                                  <td>{{product.id}}</td>
+                                  <td>{{product.Item_Name}}</td>
+                                  <td>{{product.Category.Category_Name}}</td>
+                                  <td>{{product.Quantity}}</td>
+                                  <td>{{product.Created_Date}}</td>
+                                  <td><a href="{% url 'editorder' product.id %}" class="btn btn-primary"><i class="far fa-edit"></i></a></td>
+                                  <td><a href="{% url 'deleteorder' product.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a></td>
+                                </tr>
+                              {% endfor %}
+                            {% else %}
+                                <tr class="text-center">
+                                  <td class="text-center">
+                                      No Items Available
+                                  </td>
+                                </tr>                    
+                            {% endif %}                          
+                          </tbody>                          
+                        </table>          
+                      </div>
+                </div>
+              </div>
+             </div> 
+          </div>
 {% endblock %}

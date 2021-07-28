@@ -1,68 +1,90 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Stock
-from .forms import StockCreateForm,StockUpdateForm
+from .models import Product,Order,Category
+from .forms import OrderCreateForm,OrderUpdateForm
 from django.contrib import messages
-from django.utils.safestring import mark_safe
-# Create your views here.
-#############user dashboard######################
-@login_required(login_url='login')   
+
+
+############################## View for retreaive & display all entries from Product table & Serach##########.
+@login_required(login_url='login')
 def dashboard(request):
-    Query_set=Stock.objects.all()
-        
-    #Logic for search by category & productname
+    Query_set = Product.objects.all()
+   
+
+    # Logic for search by category & product by name
     if 'keywords' in request.GET:
-        keywords=request.GET['keywords']
+        keywords = request.GET['keywords']
         if keywords:
-            #join query from 2 columns of one table for search by category & productname
-            Query_set=Query_set.filter(Item_Name__icontains=keywords)
+            # join query from 2 columns of one table for search by category & productname
+            Query_set = Query_set.filter(Product_Name__icontains=keywords) | Query_set.filter(
+                Product_Category__Category_Name__icontains=keywords)  # For accessing other table when have relationship field EX->Modal__columnname like Category__Category_Name
 
-    
-    context={
-        'products':Query_set
+    context = {
+        'products': Query_set
     }
 
-    return render(request,'accounts/dashboard.html',context)
-
+    return render(request, 'accounts/dashboard.html', context)
     
-#############user Create Order######################
-@login_required(login_url='login')   
-def order(request):
+    
+    
+    ############################Orders Management##############
+    ##############################Create Orders#################
+    
+@login_required(login_url='login')
+def addOrder(request):
     if request.method == 'POST':
-        form=StockCreateForm(request.POST)
+        form = OrderCreateForm(request.POST)
+        
         if form.is_valid():
-            Item_name=form.cleaned_data['Item_Name']
-            Category=form.cleaned_data['Category']
-            Quantity=form.cleaned_data['Quantity']
-            form.save()        
-            messages.success(request,'Item is Ordered Successfully')
-            return redirect('dashboard')
+            Order_Name_Of_Product = form.cleaned_data['Order_Name_Of_Product']
+            Order_Quantity = form.cleaned_data['Order_Quantity']
+            Phone = form.cleaned_data['Phone']
+            Email = form.cleaned_data['Email']
+            order = form.save(commit=False) #By this you can take form value to variable like order.then you will process data from database like.order.customer=request.user
+            order.customer = request.user  #Logic to have the logged-in user and saving in user field of order table
+            order.save()
+            messages.success(request, 'Item is Ordered Successfully')
+            return redirect('viewOrders')
         else:
-            form=StockCreateForm(request.POST)
-            context={
-            'form':form,
-            
-        }
-            
-            return render(request,'accounts/add_order.html',context)
-    
-    form=StockCreateForm()
-    context={
-        'form':form
+            form = OrderCreateForm(request.POST)
+            context = {
+                'form': form,
+
+            }
+
+            return render(request, 'accounts/add_order.html', context)
+
+    form = OrderCreateForm()
+    context = {
+        'form': form
     }
 
-    return render(request,'accounts/add_order.html',context)
+    return render(request, 'accounts/add_order.html', context)
 
-#########User Edit order############
-def editorder(request,pk):
-    queryset = Stock.objects.get(id=pk)
-    form = StockUpdateForm(instance=queryset)
+
+############################## View for  display all Orders from Order table For loggedin users & Search##########.
+@login_required(login_url='login')
+def viewOrders(request):
+    Query_set = Order.objects.filter(customer_id=request.user.id) #Query to fetch specific user's orders
+    context = {
+        'orders': Query_set
+    }
+
+    return render(request, 'accounts/view_orders.html', context)
+
+
+################################ View for  Update Orders from Order table For loggedin users######################.
+@login_required(login_url='login')
+def editOrder(request,pk):
+    # user=Order.objects.filter(customer_id=request.user.id)
+    query_set = Order.objects.get(id=pk)  ####objects.get method doesnot return queryset like filter.It will return onlny one result
+    form = OrderUpdateForm(instance=query_set)
     if request.method == 'POST':
-        form = StockUpdateForm(request.POST, instance=queryset)
+        form = OrderUpdateForm(request.POST, instance=query_set)
         if form.is_valid():
             form.save()
-            messages.success(request,mark_safe("your order Is Successfully Updated <a href='{% url 'editorder instance.id' %}'>View</a>"))
-            return redirect('dashboard')
+            messages.success(request,'Item is Updated Successfully')       
+            return redirect('viewOrders')
          
     context = {
         'form':form,
@@ -71,13 +93,14 @@ def editorder(request,pk):
     }
     return render(request,'accounts/edit_order.html', context)
 
-#################Delete Order###############
-def deleteorder(request,pk):
-    queryset = Stock.objects.get(id=pk)
+
+################################ View for  Delete Orders from Order table For loggedin users###################.
+
+def deleteOrder(request,pk):
+    queryset = Order.objects.get(id=pk)
     if request.method == 'POST':
         queryset.delete()
-        messages.success(request,'Item is Deleted Successfully')
-        return redirect('dashboard')
+        return redirect('viewOrders')
     context={
         'pk':pk
     }

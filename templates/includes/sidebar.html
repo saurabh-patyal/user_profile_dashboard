@@ -35,9 +35,10 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="#">View Your orders</a>
-                        <a class="collapse-item" href="{% url 'order' %}">Make New Order</a>
+                        <h6 class="collapse-header">Manage Your Orders:</h6>
+                        <a class="collapse-item" href="{% url 'addOrder' %}">Make New Order</a>
+                        <a class="collapse-item" href="{% url 'viewOrders' %}">View Your orders</a>
+                        
                     </div>
                 </div>
             </li>

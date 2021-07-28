@@ -5,9 +5,9 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True,null=True)
     location = models.CharField(max_length=30, blank=True,null=True)
     birth_date = models.DateField(null=True, blank=True)
+    bio = models.TextField(max_length=500, blank=True,null=True)
     profile_pic = models.ImageField(default='default.svg', null=True, blank=True,upload_to='profile_pics/%Y/%m/%d')
 
     def __str__(self):

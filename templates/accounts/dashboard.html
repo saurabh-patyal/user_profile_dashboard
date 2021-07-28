@@ -19,8 +19,8 @@
                               <th>Product Category</th>
                               <th>Quatity Remained</th>
                               <th>Last Updated</th>
-                              <th>Update Entry</th>
-                              <th>Delete Entry</th>
+                              <th>Vendor Name</th>
+                              <th>View Product</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -28,12 +28,13 @@
                               {%for product in products %}
                                 <tr>
                                   <td>{{product.id}}</td>
-                                  <td>{{product.Item_Name}}</td>
-                                  <td>{{product.Category.Category_Name}}</td>
-                                  <td>{{product.Quantity}}</td>
+                                  <td>{{product.Product_Name}}</td>
+                                  <td>{{product.Product_Category.Category_Name}}</td>
+                                  <td>{{product.Product_Quantity}}</td>
                                   <td>{{product.Created_Date}}</td>
-                                  <td><a href="{% url 'editorder' product.id %}" class="btn btn-primary"><i class="far fa-edit"></i></a></td>
-                                  <td><a href="{% url 'deleteorder' product.id %}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a></td>
+                                  <td>{{product.Created_by}}</td>
+                                  <td><a href="#" class="btn btn-primary">View</a></td>
+                                  {% comment %} <td><a href="#" class="btn btn-danger"><i class="far fa-trash-alt"></i></a></td> {% endcomment %}
                                 </tr>
                               {% endfor %}
                             {% else %}

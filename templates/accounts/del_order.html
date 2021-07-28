@@ -8,10 +8,10 @@
                 <div class="card-body">
                     <h5 class="card-title"><h2>Are You Sure Want To Delete ?</h2></h5>
                     <p class="card-text">
-                       <form method="post" action="{% url 'deleteorder' pk %}">
+                       <form method="post" action="{% url 'deleteOrder' pk %}">
                         {% csrf_token %}     
                             <input class="btn btn-danger text-center" type="submit" value="Delete" />
-                            <a href="{% url 'dashboard' %}"><div class="btn btn-primary text-center">Cancel</div></a>
+                            <a href="{% url 'viewOrders' %}"><div class="btn btn-primary text-center">Cancel</div></a>
                         </form>
                     </p>          
                 </div>

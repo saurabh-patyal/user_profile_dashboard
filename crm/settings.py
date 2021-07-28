@@ -43,7 +43,7 @@ DEFAULT_APPS = [
 LOCAL_APPS =[
     'pages.apps.PagesConfig',
     'accounts.apps.AccountsConfig',
-    'dashboard.apps.DashboardConfig'
+    'dashboard.apps.DashboardConfig',
     
 ]
 

@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><h2>Update Your Order</h2></h5>
                     <p class="card-text">
-                        <form action="{% url 'editorder' pk %}" method="post">
+                        <form action="{% url 'editOrder' pk %}" method="post">
                             {% csrf_token %}
                             
                             {{ form | crispy}}

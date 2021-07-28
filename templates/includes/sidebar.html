@@ -30,14 +30,14 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Orders</span>
+                   <i class="fas fa-cubes"></i>
+                    <span>&nbsp;Orders</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage Your Orders:</h6>
-                        <a class="collapse-item" href="{% url 'addOrder' %}">Make New Order</a>
-                        <a class="collapse-item" href="{% url 'viewOrders' %}">View Your orders</a>
+                        <a class="collapse-item" href="{% url 'addOrder' %}"><i class="fas fa-box-open"></i> Make New Order</a>
+                        <a class="collapse-item" href="{% url 'viewOrders' %}"><i class="fas fa-book-reader"></i> View Your Orders</a>
                         
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect , get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Product,Order,Category
 from .forms import OrderCreateForm,OrderUpdateForm
@@ -25,10 +25,19 @@ def dashboard(request):
 
     return render(request, 'accounts/dashboard.html', context)
     
+##################################### Single Product Page########################################
+@login_required(login_url='login')
+def productDetail(request,pk):
+    Product_Detail = get_object_or_404(Product,id=pk)
+    context={ 
+        'product': Product_Detail
+    }
+
+    return render(request,'accounts/product_detail.html',context)
     
-    
-    ############################Orders Management##############
-    ##############################Create Orders#################
+#################################################Orders Management########################################################
+   
+############################################Create Orders##############################
     
 @login_required(login_url='login')
 def addOrder(request):

@@ -26,7 +26,7 @@ class Product(models.Model):
     Created_Date = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
-        return f'{self.Product_Name}'
+        return f'{self.Product_Name}-{self.Product_Quantity}'
 
 
 class Order(models.Model):
@@ -44,4 +44,4 @@ class Order(models.Model):
     Created_Date = models.DateTimeField(auto_now_add=False, auto_now=True)
     Updated_Date = models.DateTimeField(auto_now_add=False, auto_now=True)
     def __str__(self):
-        return f'{self.Order_Name_Of_Product}-Order By:{self.customer}'
+        return f'{self.Order_Name_Of_Product}-Order By:{self.customer.username}'

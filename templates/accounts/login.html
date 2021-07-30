@@ -23,9 +23,19 @@
                                     <form action="{% url 'login' %}" method="POST">
                                         {% csrf_token %}
                                         {{form | crispy}}
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="autoSizingCheck" onclick="showPassword()">
+                                            <label class="form-check-label" for="autoSizingCheck">
+                                                Show Password
+                                            </label>
+                                        </div>
                                         
-                                        <input type="submit" value="Login" class="btn btn-primary btn-block">
+                                        <div class="form-group">
+                                            <input type="submit" value="Login" class="btn btn-primary btn-block">  
+                                        </div>
                                     </form>
+                                </div> 
+                                   
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="{% url 'password_reset' %}">Forgot Password?</a>

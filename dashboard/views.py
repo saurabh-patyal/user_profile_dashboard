@@ -50,6 +50,9 @@ def addOrder(request):
             Phone = form.cleaned_data['Phone']
             Email = form.cleaned_data['Email']
             order = form.save(commit=False) #By this you can take form value to variable like order.then you will process data from database like.order.customer=request.user
+            # order.Order_Name_Of_Product-=order.Order_Quantity
+            
+
             order.customer = request.user  #Logic to have the logged-in user and saving in user field of order table
             order.save()
             messages.success(request, 'Item is Ordered Successfully')

@@ -25,7 +25,7 @@ class SignUpForm(UserCreationForm):
 
 class LoginUserForm(AuthenticationForm):
     username=forms.CharField(max_length=30,required=True)
-    # password=forms.CharField(widget=forms.PasswordInput,max_length=30,required=True) #NOTE:Include this is you want some other field cutomization accept basic
+    # password=forms.CharField(widget=forms.PasswordInput,max_length=30,required=True) ##Note:Include this is you want some other field cutomization accept basic
     class Meta:
         model = User
         fields = [

@@ -49,12 +49,14 @@ def addOrder(request):
             Order_Quantity = form.cleaned_data['Order_Quantity']
             Phone = form.cleaned_data['Phone']
             Email = form.cleaned_data['Email']
-            order = form.save(commit=False) #By this you can take form value to variable like order.then you will process data from database like.order.customer=request.user
-            # order.Order_Name_Of_Product-=order.Order_Quantity
+            # print(Order_Name_Of_Product)
+            instance = form.save(commit=False) #By this you can take form value to variable like order.then you will process data from database like.order.customer=request.user
+            # print(instance.Order_Name_Of_Product.Product_Quantity)
+            # print(instance.Order_Quantity)
             
 
-            order.customer = request.user  #Logic to have the logged-in user and saving in user field of order table
-            order.save()
+            instance.customer = request.user  #Logic to have the logged-in user and saving in user field of instance table
+            instance.save()
             messages.success(request, 'Item is Ordered Successfully')
             return redirect('viewOrders')
         else:
